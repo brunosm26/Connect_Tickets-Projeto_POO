@@ -1,108 +1,64 @@
-🏟️ Arena Connect
-Gestão de Eventos & Engajamento para Grandes Arenas
-<p align="center"> Sistema desenvolvido para **gerenciamento inteligente de eventos**, permitindo interação entre **cidadãos e administradores** de um complexo de eventos. </p>
-📌 Sobre o Projeto
+Arena Connect
+📊 Projeto de Gestão de Eventos
+Integrantes do Grupo
 
-💡 Arena Connect é uma solução robusta para a gestão de eventos em grandes arenas e centros de convenções.
 
-O sistema permite que cidadãos acompanhem eventos, confirmem presença e sugiram novas atividades, enquanto administradores gerenciam toda a agenda através de um painel estratégico com métricas e curadoria de conteúdo.
+O Arena Connect é uma solução desenvolvida para auxiliar na gestão de eventos em grandes complexos esportivos e culturais. O sistema foi projetado com o objetivo de centralizar a organização de eventos, melhorar o acompanhamento da agenda da arena e promover maior interação entre cidadãos e administradores.
 
-A aplicação foi construída utilizando Java e Spring Boot, seguindo boas práticas de arquitetura em camadas e desenvolvimento de APIs REST.
+A plataforma permite que usuários acompanhem os eventos programados, confirmem presença e participem de forma ativa sugerindo novas atividades. Para a administração da arena, o sistema oferece ferramentas de gestão e análise que facilitam o planejamento e a tomada de decisões.
 
-🚀 Funcionalidades
-👤 Área do Cidadão
-📅 Catálogo de Eventos
+Através da utilização de tecnologias modernas como Java e Spring Boot, o sistema foi estruturado seguindo boas práticas de desenvolvimento, com separação clara de responsabilidades entre as camadas da aplicação.
 
-Visualização de eventos futuros com informações completas:
+Funcionalidades do Sistema
+Área do Cidadão
 
-Data
+A plataforma disponibiliza um ambiente voltado para o público que deseja acompanhar as atividades da arena.
 
-Categoria
+Entre as principais funcionalidades estão:
 
-Descrição detalhada
+visualização da agenda de eventos futuros;
 
-🔎 Filtros Dinâmicos
+acesso a informações detalhadas sobre cada evento;
 
-Busca rápida por categorias de eventos:
+filtragem de eventos por categorias;
 
-⚽ Esportes
+confirmação de presença em eventos disponíveis;
 
-🎤 Shows
+envio de sugestões de novos eventos;
 
-🎭 Cultural
+solicitação de visitas guiadas à arena.
 
-🏢 Corporativo
+Esses recursos permitem que os cidadãos tenham uma participação mais ativa na programação da arena.
 
-🎟️ Reserva de Vagas (RSVP)
+Painel Administrativo
 
-Os usuários podem confirmar presença em eventos.
+O sistema também oferece um painel administrativo voltado para a gestão dos eventos.
 
-✔ Atualização automática da capacidade disponível
-✔ Controle de vagas em tempo real
+Por meio desse painel é possível:
 
-💬 Interatividade com a Arena
+cadastrar novos eventos;
 
-O cidadão pode:
+editar informações de eventos existentes;
 
-Sugerir novos eventos
+atualizar detalhes como data, categoria e descrição;
 
-Solicitar visitas guiadas à Arena
+gerenciar a agenda completa da arena.
 
-🔑 Painel Administrativo
-📋 CRUD de Eventos
+Além disso, o sistema disponibiliza um dashboard estatístico, permitindo a visualização de informações importantes como:
 
-Os administradores podem:
+total de eventos cadastrados;
 
-✔ Criar eventos
-✔ Editar informações
-✔ Atualizar dados
-✔ Gerenciar agenda completa da Arena
+média de participação do público;
 
-📊 Dashboard Estatístico
+categorias de eventos mais populares.
 
-Painel com indicadores importantes como:
+Outro recurso disponível é o gerenciamento das sugestões enviadas pelos usuários, permitindo que os administradores aprovem ou descartem ideias de novos eventos.
 
-📅 Total de eventos cadastrados
+Arquitetura do Sistema
 
-👥 Média de público
+A aplicação foi desenvolvida utilizando o padrão de arquitetura em camadas, amplamente adotado em aplicações baseadas em Spring Boot.
 
-📈 Categorias mais populares
-
-💡 Gestão de Sugestões
-
-Sistema para analisar sugestões enviadas pela comunidade.
-
-Os administradores podem:
-
-✔ Aprovar sugestões
-✔ Rejeitar ideias
-✔ Transformar sugestões em novos eventos
-
-🎨 Design & Experiência do Usuário
-
-O protótipo visual do sistema foi desenvolvido com foco em usabilidade e experiência do usuário (UX).
-
-🔗 Acesse o protótipo no Figma
-
-https://cold-target-85807250.figma.site/home
-🛠️ Stack Tecnológica
-Backend
-Tecnologia	Descrição
-Java 17+	Linguagem principal
-Spring Boot 3	Framework backend
-Spring Data JPA	Persistência de dados
-REST API	Comunicação entre sistemas
-Banco de Dados
-Tecnologia	Uso
-MySQL / PostgreSQL (definir)	Armazenamento dos dados
-Ferramentas
-Ferramenta	Uso
-Maven	Gerenciamento de dependências
-Git / GitHub	Controle de versão
-Figma	Prototipação de interface
-🧱 Arquitetura do Projeto
-
-O sistema segue o padrão de arquitetura em camadas, amplamente utilizado em aplicações Spring Boot.
+A estrutura principal é organizada da seguinte forma:
 
 Controller
    ↓
@@ -111,27 +67,55 @@ Service
 Repository
    ↓
 Database
-📂 Estrutura
-src
- ┣ controller
- ┣ service
- ┣ repository
- ┣ model
- ┗ dto
-⚙️ Como Rodar o Projeto
-1️⃣ Clone o repositório
+
+Essa organização facilita a manutenção do código, melhora a escalabilidade do sistema e garante uma separação clara das responsabilidades de cada componente.
+
+Tecnologias Utilizadas
+
+O projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+Backend
+
+Java 17
+
+Spring Boot 3
+
+Spring Data JPA
+
+Banco de Dados
+
+MySQL / PostgreSQL
+
+Ferramentas
+
+Maven
+
+Git
+
+GitHub
+
+Figma (protótipo de interface)
+
+Execução do Projeto
+
+Para executar o projeto localmente, siga os passos abaixo.
+
+Clonar o repositório
 git clone https://github.com/seu-usuario/arena-connect.git
-2️⃣ Acesse a pasta do projeto
+Acessar a pasta do projeto
 cd arena-connect
-3️⃣ Instale as dependências
-
-Certifique-se de que o Maven esteja instalado.
-
+Instalar dependências
 mvn clean install
-4️⃣ Execute a aplicação
+Executar a aplicação
 mvn spring-boot:run
-🌐 Acesse a API
 
-A aplicação estará disponível em:
+Após a execução, a API estará disponível em:
 
 http://localhost:8080
+Protótipo do Sistema
+
+O design da interface do sistema foi desenvolvido com foco em usabilidade e experiência do usuário.
+
+Link do protótipo no Figma:
+
+https://cold-target-85807250.figma.site/home
