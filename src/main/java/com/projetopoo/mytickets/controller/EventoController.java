@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import com.projetopoo.mytickets.model.Evento;
 import com.projetopoo.mytickets.service.EventoService;
 
@@ -35,6 +37,7 @@ public class EventoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Evento criar(@RequestBody Evento evento) {
         return service.criarEvento(evento);
