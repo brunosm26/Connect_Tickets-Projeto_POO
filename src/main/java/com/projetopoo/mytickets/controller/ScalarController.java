@@ -14,7 +14,7 @@ public class ScalarController {
                 <!doctype html>
                 <html>
                 <head>
-                    <title>MyTickets API</title>
+                    <title>Connect Tickets API</title>
                     <meta charset="utf-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </head>
