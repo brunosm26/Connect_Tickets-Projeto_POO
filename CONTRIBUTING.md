@@ -173,10 +173,18 @@ chmod +x mvnw
 - [x] Padronizar prefixo `/api/*` em todos os controllers
 - [x] Corrigir N+1 queries (`FetchType.LAZY`) e referencias circulares (`@JsonIgnore`)
 - [x] Padronizar nomes de colunas para ingles (`booking_id`, `booked_at`, etc.)
-- [x] Adicionar `PUT /api/eventos/{id}` e `DELETE /api/eventos/{id}`
 - [x] Logging estruturado (substituir `e.printStackTrace()` por SLF4J)
 - [x] Corrigir compatibilidade com Supabase/PgBouncer (`prepareThreshold=0`)
 - [x] Renomear pasta `DTOs` para `dtos` (alinhamento com declaracao de pacote)
+- [x] CRUD completo de Eventos: `GET`, `POST`, `PUT /api/eventos/{id}`, `DELETE /api/eventos/{id}`
+- [x] Gerenciamento de admins de evento: `POST/DELETE /api/eventos/{id}/admins/{idUsuario}`
+- [x] CRUD de Usuarios: `GET`, `GET /{id}`, `POST`, `PUT /api/usuarios/{id}`
+- [x] Inscricoes: `POST`, `GET` (admin), `GET /me` (usuario logado)
+- [x] Agendamentos: `POST`, `GET` (admin), `GET /{id}`
+- [x] Visitas: `POST`, `GET`, `GET /{id}`
+- [x] Sugestoes: `POST`, `GET`, `GET /{id}`
+- [x] Autenticacao JWT: login, register, register-admin (protegido por ADMIN)
+- [x] Documentacao da API disponivel em `/docs` (Scalar UI)
 
 ### Pendente
 - [ ] Corrigir CORS: restringir `allowedOrigins` para a URL do frontend em producao
