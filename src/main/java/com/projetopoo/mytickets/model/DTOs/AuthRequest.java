@@ -1,4 +1,3 @@
-package com.projetopoo.mytickets.model.DTOs;
+package com.projetopoo.mytickets.model.dtos;
 
-public record AuthRequest(String email, String password) {
-}
+public record AuthRequest(String email, String password) {}

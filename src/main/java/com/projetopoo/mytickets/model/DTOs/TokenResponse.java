@@ -1,4 +1,3 @@
-package com.projetopoo.mytickets.model.DTOs;
+package com.projetopoo.mytickets.model.dtos;
 
-public record TokenResponse(String token) {
-}
+public record TokenResponse(String token) {}

@@ -1,3 +1,11 @@
-package com.projetopoo.mytickets.model.DTOs;
+package com.projetopoo.mytickets.model.dtos;
 
-public record UsuarioResponse(Long id, String nome, String email, String username) {}
+import java.time.LocalDateTime;
+
+public record UsuarioResponse(
+        Long idUsuario,
+        String name,
+        String email,
+        String username,
+        LocalDateTime updatedAt
+) {}
