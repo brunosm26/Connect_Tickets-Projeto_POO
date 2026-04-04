@@ -159,13 +159,35 @@ chmod +x mvnw
 
 ## TO DO
 
-- ver cascade de entidades
-- ver security
-- constructors
-- refatorar Visit: unificar `date` + `time` em `scheduled_at`
-- alinhar entidade `Usuario` com diagrama: `isAdmin (Boolean)` → `role (ENUM)`
-- adicionar `created_at` na entidade `Usuario`
-- mover JWT secret para variavel de ambiente
+### Feito
+- [x] Alinhar entidade `Usuario`: `isAdmin (Boolean)` → `role (ENUM)`
+- [x] Adicionar `created_at` e `updated_at` na entidade `Usuario`
+- [x] Mover JWT secret para variavel de ambiente (`JWT_SECRET`)
+- [x] Migrar banco de H2 para Supabase PostgreSQL
+- [x] Adicionar Docker setup
+- [x] Criar camada de servicos (logica de negocio separada dos controllers)
+- [x] Criar DTOs para desacoplar a API das entidades JPA
+- [x] Tratamento global de excecoes (`GlobalExceptionHandler`)
+- [x] Excecoes customizadas (`EntityNotFoundException`, `BusinessException`)
+- [x] Corrigir permissoes de rotas no `SecurityConfig` (`/api/auth/register-admin` protegido)
+- [x] Padronizar prefixo `/api/*` em todos os controllers
+- [x] Corrigir N+1 queries (`FetchType.LAZY`) e referencias circulares (`@JsonIgnore`)
+- [x] Padronizar nomes de colunas para ingles (`booking_id`, `booked_at`, etc.)
+- [x] Adicionar `PUT /api/eventos/{id}` e `DELETE /api/eventos/{id}`
+- [x] Logging estruturado (substituir `e.printStackTrace()` por SLF4J)
+- [x] Corrigir compatibilidade com Supabase/PgBouncer (`prepareThreshold=0`)
+- [x] Renomear pasta `DTOs` para `dtos` (alinhamento com declaracao de pacote)
+
+### Pendente
+- [ ] Corrigir CORS: restringir `allowedOrigins` para a URL do frontend em producao
+- [ ] Mudar `spring.jpa.hibernate.ddl-auto=update` para `validate` em producao
+- [ ] Implementar `GET /api/eventos?categoria=` — filtro de eventos por categoria
+- [ ] Proteger `GET /api/usuarios` — atualmente publico sem autenticacao
+- [ ] Implementar atualizacao de status de Sugestao (aprovar/ignorar) — endpoint ADMIN
+- [ ] Refatorar `Visita`: unificar `date` + `time` em `scheduled_at`
+- [ ] Revisar cascade de entidades
+- [ ] Adicionar DELETE para Agendamento, Inscricao, Visita e Sugestao
+- [ ] Atualizar CONTRIBUTING.md com stack e estrutura atual (Supabase, novos DTOs, etc.)
 
 ## Equipe
 
