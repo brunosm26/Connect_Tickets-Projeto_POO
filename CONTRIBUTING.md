@@ -187,6 +187,7 @@ chmod +x mvnw
 - [x] Documentacao da API disponivel em `/docs` (Scalar UI)
 - [x] Proteger `GET /api/usuarios` — atualmente publico sem autenticacao
 - [x] Refatorar `Visita`: unificar `date` + `time` em `scheduled_at`
+- [x] Adicionar `MockDataInitializer` — cria admin e user padrao ao subir em perfil `dev`
 
 ### Pendente
 - [ ] Implementar `GET /api/eventos?categoria=` — filtro de eventos por categoria
