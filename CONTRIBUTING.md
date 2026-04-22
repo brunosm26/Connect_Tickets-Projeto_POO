@@ -245,9 +245,10 @@ chmod +x mvnw
 - [x] Proteger `GET /api/usuarios` — atualmente publico sem autenticacao
 - [x] Refatorar `Visita`: unificar `date` + `time` em `scheduled_at`
 - [x] Adicionar `MockDataInitializer` — cria admin e user padrao ao subir em perfil `dev`
+- [x] Implementar `GET /api/eventos?categoria=` — filtro de eventos por categoria
 
 ### Pendente
-- [ ] Implementar `GET /api/eventos?categoria=` — filtro de eventos por categoria
+
 - [ ] Implementar atualizacao de status de Sugestao (aprovar/ignorar) — endpoint ADMIN
 - [ ] Revisar cascade de entidades
 - [ ] Adicionar DELETE para Agendamento, Inscricao, Visita e Sugestao
