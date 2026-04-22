@@ -10,7 +10,6 @@ import com.projetopoo.mytickets.repository.EventoRepository;
 import com.projetopoo.mytickets.repository.TipoEventoRepository;
 import com.projetopoo.mytickets.repository.UsuarioRepository;
 
-import org.hibernate.event.service.spi.EventActionWithParameter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
