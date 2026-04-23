@@ -10,8 +10,7 @@ import com.projetopoo.mytickets.repository.EventoRepository;
 import com.projetopoo.mytickets.repository.InscricaoRepository;
 import com.projetopoo.mytickets.repository.UsuarioRepository;
 import com.projetopoo.mytickets.security.CustomUserDetails;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
+import com.projetopoo.mytickets.security.SecurityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +24,16 @@ public class InscricaoService {
     private final InscricaoRepository inscricaoRepository;
     private final UsuarioRepository usuarioRepository;
     private final EventoRepository eventoRepository;
+    private final SecurityUtils securityUtils;
 
     public InscricaoService(InscricaoRepository inscricaoRepository,
                             UsuarioRepository usuarioRepository,
-                            EventoRepository eventoRepository) {
+                            EventoRepository eventoRepository,
+                            SecurityUtils securityUtils) {
         this.inscricaoRepository = inscricaoRepository;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;
+        this.securityUtils = securityUtils;
     }
 
     @Transactional
@@ -75,23 +77,10 @@ public class InscricaoService {
     public void excluirInscricao(Long id) {
         Inscricao inscricao = inscricaoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Inscrição não encontrada com ID: " + id));
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAdmin = auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (!isAdmin) {
-            if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
-                CustomUserDetails principal = (CustomUserDetails) auth.getPrincipal();
-                Long currentUserId = principal.getUsuario().getIdUsuario();
-                if (inscricao.getUser() == null || !inscricao.getUser().getIdUsuario().equals(currentUserId)) {
-                    throw new AccessDeniedException("Você não tem permissão para excluir esta inscrição.");
-                }
-            } else {
-                throw new AccessDeniedException("Acesso negado.");
-            }
-        }
-
+        securityUtils.verifyOwnership(
+                inscricao.getUser() != null ? inscricao.getUser().getIdUsuario() : null,
+                "Você não tem permissão para excluir esta inscrição."
+        );
         inscricaoRepository.delete(inscricao);
     }
 }

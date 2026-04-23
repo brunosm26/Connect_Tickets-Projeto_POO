@@ -251,7 +251,7 @@ chmod +x mvnw
 
 - [ ] Implementar atualizacao de status de Sugestao (aprovar/ignorar) — endpoint ADMIN
 - [ ] Revisar cascade de entidades
-- [ ] Adicionar DELETE para Agendamento, Inscricao, Visita e Sugestao
+- [x] Adicionar DELETE para Agendamento, Inscricao, Visita e Sugestao
 - [ ] Atualizar CONTRIBUTING.md com stack e estrutura atual (Supabase, novos DTOs, etc.)
 - [ ] Unificar Visita e Agendamento? (código duplicado?, ou eu não entendi a regra de negócio)
 

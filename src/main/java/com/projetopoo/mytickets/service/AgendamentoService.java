@@ -9,10 +9,7 @@ import com.projetopoo.mytickets.model.dtos.AgendamentoResponseDTO;
 import com.projetopoo.mytickets.repository.AgendamentoRepository;
 import com.projetopoo.mytickets.repository.EventoRepository;
 import com.projetopoo.mytickets.repository.UsuarioRepository;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import com.projetopoo.mytickets.security.CustomUserDetails;
+import com.projetopoo.mytickets.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +21,16 @@ public class AgendamentoService {
     private final AgendamentoRepository agendamentoRepository;
     private final UsuarioRepository usuarioRepository;
     private final EventoRepository eventoRepository;
+    private final SecurityUtils securityUtils;
 
     public AgendamentoService(AgendamentoRepository agendamentoRepository,
                               UsuarioRepository usuarioRepository,
-                              EventoRepository eventoRepository) {
+                              EventoRepository eventoRepository,
+                              SecurityUtils securityUtils) {
         this.agendamentoRepository = agendamentoRepository;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;
+        this.securityUtils = securityUtils;
     }
 
     @Transactional
@@ -68,23 +68,10 @@ public class AgendamentoService {
     public void excluirAgendamento(Long id) {
         Agendamento agendamento = agendamentoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado com ID: " + id));
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAdmin = auth != null && auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (!isAdmin) {
-            if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
-                CustomUserDetails principal = (CustomUserDetails) auth.getPrincipal();
-                Long currentUserId = principal.getUsuario().getIdUsuario();
-                if (agendamento.getUser() == null || !agendamento.getUser().getIdUsuario().equals(currentUserId)) {
-                    throw new AccessDeniedException("Você não tem permissão para excluir este agendamento.");
-                }
-            } else {
-                throw new AccessDeniedException("Acesso negado.");
-            }
-        }
-
+        securityUtils.verifyOwnership(
+                agendamento.getUser() != null ? agendamento.getUser().getIdUsuario() : null,
+                "Você não tem permissão para excluir este agendamento."
+        );
         agendamentoRepository.delete(agendamento);
     }
 
