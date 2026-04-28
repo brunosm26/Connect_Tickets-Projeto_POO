@@ -7,7 +7,7 @@ Atualmente, a Arena Pernambuco possui baixa ocupação efetiva e dificuldades de
 
 ---
 
-## 📅 Entrega 01 (16/03) - Planejamento e Design
+## 📅 Entrega 01 e 02 (16/03) - Planejamento e Design
 
 Nesta primeira etapa, focamos na definição do escopo, mapeamento das necessidades dos usuários e desenho da interface (baixa fidelidade).
 
@@ -29,3 +29,12 @@ Nesta primeira etapa, focamos na definição do escopo, mapeamento das necessida
     * Painel Administrativo com métricas de estatística (tendência central e dispersão).
     * Cadastro de eventos por administradores.
     * Agendamento de participação em eventos e visitas.
+
+
+## 📅 Entrega 03 (27/04) 
+
+### 1. Issues/Bugtracker atualizados:
+<img width="1123" height="290" alt="image" src="https://github.com/user-attachments/assets/74aeece3-3699-425c-a1a0-1f3e1261ed5e" />
+
+### 2. Screencast Atualizado:
+
