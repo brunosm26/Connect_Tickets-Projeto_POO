@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/eventos")
@@ -21,10 +24,14 @@ public class EventoController {
     }
 
     @GetMapping
-    public List<EventoDTO> listar(@RequestParam(required = false) EventCategory category) {
-        return service.listarEventos(category).stream()
-                .map(service::toDTO)
-                .toList();
+    public Page<EventoDTO> listar(
+            @RequestParam(required = false) EventCategory category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "asc") String sort) {
+        Sort.Direction direction = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "idEvento"));
+        return service.listarEventos(category, pageable).map(service::toDTO);
     }
 
     @GetMapping("/{idEvento}")

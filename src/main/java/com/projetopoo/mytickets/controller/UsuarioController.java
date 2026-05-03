@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -31,9 +34,13 @@ public class UsuarioController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UsuarioResponse> listar() {
-        List<Usuario> usuarios = service.listarUsuarios();
-        return usuarios.stream().map(this::toResponse).toList();
+    public Page<UsuarioResponse> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "asc") String sort) {
+        Sort.Direction direction = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "idUsuario"));
+        return service.listarUsuarios(pageable).map(this::toResponse);
     }
 
     @GetMapping("/{idUsuario}")
@@ -45,7 +52,7 @@ public class UsuarioController {
     @PutMapping("/{idUsuario}")
     @PreAuthorize("hasRole('ADMIN') or #idUsuario == authentication.principal.usuario.idUsuario")
     public UsuarioResponse atualizar(@PathVariable Long idUsuario,
-                                     @Valid @RequestBody RegisterRequest request) {
+            @Valid @RequestBody RegisterRequest request) {
         return toResponse(service.atualizar(idUsuario, request));
     }
 
@@ -55,7 +62,6 @@ public class UsuarioController {
                 u.getName(),
                 u.getEmail(),
                 u.getUsername(),
-                u.getUpdatedAt()
-        );
+                u.getUpdatedAt());
     }
 }

@@ -7,7 +7,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/visitas")
@@ -20,10 +23,13 @@ public class VisitaController {
     }
 
     @GetMapping
-    public List<VisitaResponseDTO> listar() {
-        return service.listarVisitas().stream()
-                .map(service::toResponseDTO)
-                .toList();
+    public Page<VisitaResponseDTO> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "asc") String sort) {
+        Sort.Direction direction = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "idVisita"));
+        return service.listarVisitas(pageable).map(service::toResponseDTO);
     }
 
     @GetMapping("/{idVisita}")
