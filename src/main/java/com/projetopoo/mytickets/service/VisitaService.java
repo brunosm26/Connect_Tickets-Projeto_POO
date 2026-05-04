@@ -86,6 +86,7 @@ public class VisitaService {
                 v.getScheduledAt(),
                 v.getIsAuthorized(),
                 v.getRequester() != null ? v.getRequester().getName() : null,
-                v.getAuthorizer() != null ? v.getAuthorizer().getName() : null);
+                v.getAuthorizer() != null ? v.getAuthorizer().getName() : null,
+                v.getVisitorCount());
     }
 }
