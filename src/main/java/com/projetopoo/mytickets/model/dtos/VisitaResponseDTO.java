@@ -7,5 +7,6 @@ public record VisitaResponseDTO(
         LocalDateTime scheduledAt,
         Boolean isAuthorized,
         String requesterName,
-        String authorizerName
+        String authorizerName,
+        Integer visitorCount
 ) {}
