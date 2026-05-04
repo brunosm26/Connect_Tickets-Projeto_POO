@@ -4,13 +4,12 @@ import com.projetopoo.mytickets.model.dtos.VisitaDTO;
 import com.projetopoo.mytickets.model.dtos.VisitaResponseDTO;
 import com.projetopoo.mytickets.service.VisitaService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/visitas")
@@ -24,11 +23,7 @@ public class VisitaController {
 
     @GetMapping
     public Page<VisitaResponseDTO> listar(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "asc") String sort) {
-        Sort.Direction direction = Sort.Direction.fromString(sort);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "idVisita"));
+            @PageableDefault(size = 10, sort = "idVisita", direction = Sort.Direction.ASC) Pageable pageable) {
         return service.listarVisitas(pageable).map(service::toResponseDTO);
     }
 

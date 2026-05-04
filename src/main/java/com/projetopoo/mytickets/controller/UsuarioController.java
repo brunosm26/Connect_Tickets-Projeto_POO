@@ -5,14 +5,13 @@ import com.projetopoo.mytickets.model.dtos.RegisterRequest;
 import com.projetopoo.mytickets.model.dtos.UsuarioResponse;
 import com.projetopoo.mytickets.service.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -35,11 +34,7 @@ public class UsuarioController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Page<UsuarioResponse> listar(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "asc") String sort) {
-        Sort.Direction direction = Sort.Direction.fromString(sort);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "idUsuario"));
+            @PageableDefault(size = 10, sort = "idUsuario", direction = Sort.Direction.ASC) Pageable pageable) {
         return service.listarUsuarios(pageable).map(this::toResponse);
     }
 

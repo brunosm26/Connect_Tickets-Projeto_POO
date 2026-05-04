@@ -4,14 +4,13 @@ import com.projetopoo.mytickets.model.dtos.AgendamentoDTO;
 import com.projetopoo.mytickets.model.dtos.AgendamentoResponseDTO;
 import com.projetopoo.mytickets.service.AgendamentoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/agendamentos")
@@ -26,11 +25,7 @@ public class AgendamentoController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Page<AgendamentoResponseDTO> listar(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "asc") String sort) {
-        Sort.Direction direction = Sort.Direction.fromString(sort);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "idAgendamento"));
+            @PageableDefault(size = 10, sort = "idAgendamento", direction = Sort.Direction.ASC) Pageable pageable) {
         return service.listarAgendamentos(pageable).map(service::toResponseDTO);
     }
 
