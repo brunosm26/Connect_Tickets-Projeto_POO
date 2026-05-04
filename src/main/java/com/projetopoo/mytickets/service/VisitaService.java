@@ -39,6 +39,7 @@ public class VisitaService {
         visita.setScheduledAt(dto.scheduledAt());
         visita.setRequester(solicitante);
         visita.setIsAuthorized(false);
+        visita.setVisitorCount(dto.visitorCount());
 
         if (dto.authorizerId() != null) {
             Usuario autorizador = usuarioRepository.findById(dto.authorizerId())

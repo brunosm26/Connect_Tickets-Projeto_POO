@@ -20,6 +20,9 @@ public class Visita {
     @Column(name = "is_authorized")
     private Boolean isAuthorized;
 
+    @Column(name = "visitor_count")
+    private Integer visitorCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requester_id")
     @JsonIgnore
@@ -39,6 +42,9 @@ public class Visita {
 
     public Boolean getIsAuthorized() { return isAuthorized; }
     public void setIsAuthorized(Boolean authorized) { isAuthorized = authorized; }
+
+    public Integer getVisitorCount() { return visitorCount; }
+    public void setVisitorCount(Integer visitorCount) { this.visitorCount = visitorCount; }
 
     public Usuario getRequester() { return requester; }
     public void setRequester(Usuario requester) { this.requester = requester; }

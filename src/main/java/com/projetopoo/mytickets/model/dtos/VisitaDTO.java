@@ -12,5 +12,8 @@ public record VisitaDTO(
         @NotNull(message = "O ID do solicitante é obrigatório")
         Long requesterId,
 
-        Long authorizerId
+        Long authorizerId,
+
+        @NotNull(message = "O número de visitantes é obrigatório")
+        Integer visitorCount
 ) {}
