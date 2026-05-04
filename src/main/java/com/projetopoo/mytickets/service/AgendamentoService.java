@@ -13,7 +13,8 @@ import com.projetopoo.mytickets.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class AgendamentoService {
@@ -24,9 +25,9 @@ public class AgendamentoService {
     private final SecurityUtils securityUtils;
 
     public AgendamentoService(AgendamentoRepository agendamentoRepository,
-                              UsuarioRepository usuarioRepository,
-                              EventoRepository eventoRepository,
-                              SecurityUtils securityUtils) {
+            UsuarioRepository usuarioRepository,
+            EventoRepository eventoRepository,
+            SecurityUtils securityUtils) {
         this.agendamentoRepository = agendamentoRepository;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;
@@ -54,8 +55,8 @@ public class AgendamentoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Agendamento> listarAgendamentos() {
-        return agendamentoRepository.findAll();
+    public Page<Agendamento> listarAgendamentos(Pageable pageable) {
+        return agendamentoRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
@@ -70,8 +71,7 @@ public class AgendamentoService {
                 .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado com ID: " + id));
         securityUtils.verifyOwnership(
                 agendamento.getUser() != null ? agendamento.getUser().getIdUsuario() : null,
-                "Você não tem permissão para excluir este agendamento."
-        );
+                "Você não tem permissão para excluir este agendamento.");
         agendamentoRepository.delete(agendamento);
     }
 
@@ -81,7 +81,6 @@ public class AgendamentoService {
                 a.getBookedAt(),
                 a.getUser().getName(),
                 a.getEvent().getEventName(),
-                a.getPersonCount()
-        );
+                a.getPersonCount());
     }
 }

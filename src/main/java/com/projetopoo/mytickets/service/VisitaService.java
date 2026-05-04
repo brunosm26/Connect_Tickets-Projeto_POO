@@ -11,7 +11,8 @@ import com.projetopoo.mytickets.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class VisitaService {
@@ -21,8 +22,8 @@ public class VisitaService {
     private final SecurityUtils securityUtils;
 
     public VisitaService(VisitaRepository visitaRepository,
-                         UsuarioRepository usuarioRepository,
-                         SecurityUtils securityUtils) {
+            UsuarioRepository usuarioRepository,
+            SecurityUtils securityUtils) {
         this.visitaRepository = visitaRepository;
         this.usuarioRepository = usuarioRepository;
         this.securityUtils = securityUtils;
@@ -31,7 +32,8 @@ public class VisitaService {
     @Transactional
     public Visita criarVisita(VisitaDTO dto) {
         Usuario solicitante = usuarioRepository.findById(dto.requesterId())
-                .orElseThrow(() -> new EntityNotFoundException("Solicitante não encontrado com ID: " + dto.requesterId()));
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Solicitante não encontrado com ID: " + dto.requesterId()));
 
         Visita visita = new Visita();
         visita.setScheduledAt(dto.scheduledAt());
@@ -41,7 +43,8 @@ public class VisitaService {
 
         if (dto.authorizerId() != null) {
             Usuario autorizador = usuarioRepository.findById(dto.authorizerId())
-                    .orElseThrow(() -> new EntityNotFoundException("Autorizador não encontrado com ID: " + dto.authorizerId()));
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Autorizador não encontrado com ID: " + dto.authorizerId()));
             visita.setAuthorizer(autorizador);
         }
 
@@ -49,15 +52,12 @@ public class VisitaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Visita> listarVisitas() {
-        List<Visita> todasVisitas = visitaRepository.findAll();
+    public Page<Visita> listarVisitas(Pageable pageable) {
         if (securityUtils.isAdmin()) {
-            return todasVisitas;
+            return visitaRepository.findAll(pageable);
         }
         Long currentUserId = securityUtils.getCurrentUserId();
-        return todasVisitas.stream()
-                .filter(v -> v.getRequester() != null && v.getRequester().getIdUsuario().equals(currentUserId))
-                .toList();
+        return visitaRepository.findByRequesterIdUsuario(currentUserId, pageable);
     }
 
     @Transactional(readOnly = true)
@@ -66,8 +66,7 @@ public class VisitaService {
                 .orElseThrow(() -> new EntityNotFoundException("Visita não encontrada com ID: " + id));
         securityUtils.verifyOwnership(
                 visita.getRequester() != null ? visita.getRequester().getIdUsuario() : null,
-                "Você não tem permissão para visualizar esta visita."
-        );
+                "Você não tem permissão para visualizar esta visita.");
         return visita;
     }
 
@@ -77,8 +76,7 @@ public class VisitaService {
                 .orElseThrow(() -> new EntityNotFoundException("Visita não encontrada com ID: " + id));
         securityUtils.verifyOwnership(
                 visita.getRequester() != null ? visita.getRequester().getIdUsuario() : null,
-                "Você não tem permissão para excluir esta visita."
-        );
+                "Você não tem permissão para excluir esta visita.");
         visitaRepository.delete(visita);
     }
 
@@ -88,8 +86,6 @@ public class VisitaService {
                 v.getScheduledAt(),
                 v.getIsAuthorized(),
                 v.getRequester() != null ? v.getRequester().getName() : null,
-                v.getAuthorizer() != null ? v.getAuthorizer().getName() : null,
-                v.getVisitorCount()
-        );
+                v.getAuthorizer() != null ? v.getAuthorizer().getName() : null);
     }
 }
