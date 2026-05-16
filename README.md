@@ -132,6 +132,12 @@ Authorization: Bearer {token}
 
 ---
 
+### Entrega 04 — Implementação Final
+
+- **Issues/Bugtracker:** [Ver issues](https://github.com/brunosm26/Connect_Tickets-Projeto_POO/issues)
+
+<img alt="issues entrega 04" src="https://raw.githubusercontent.com/brunosm26/Connect_Tickets-Projeto_POO/main/docs/entrega04-issues.png" />
+
 ## Histórico
 
 Linha do tempo das entregas, com link direto para cada commit no GitHub.
@@ -238,10 +244,3 @@ Linha do tempo das entregas, com link direto para cada commit no GitHub.
 ## Equipe
 
 Projeto acadêmico da disciplina de Programação Orientada a Objetos — ADS Regular.
-
-### Entrega 04 — Implementação Final
-
-- **Issues/Bugtracker:** [Ver issues](https://github.com/brunosm26/Connect_Tickets-Projeto_POO/issues)
-
-<img alt="issues entrega 04" src="https://raw.githubusercontent.com/brunosm26/Connect_Tickets-Projeto_POO/main/docs/entrega04-issues.png" />
-
