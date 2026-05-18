@@ -1,10 +1,12 @@
 package com.projetopoo.mytickets.controller;
 
-import com.projetopoo.mytickets.model.dtos.InscricaoDTO;
+import com.projetopoo.mytickets.model.dtos.CriarInscricaoDTO;
 import com.projetopoo.mytickets.model.dtos.InscricaoResponseDTO;
 import com.projetopoo.mytickets.service.InscricaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,42 +22,25 @@ public class InscricaoController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public InscricaoResponseDTO criar(@Valid @RequestBody InscricaoDTO dto) {
-        var insc = service.salvarInscricao(dto);
-        return new InscricaoResponseDTO(
-                insc.getIdInscricao(),
-                insc.getUser().getName(),
-                insc.getEvent().getEventName(),
-                insc.getRegistrationAt(),
-                insc.getVisitorCount()
-        );
+    public ResponseEntity<InscricaoResponseDTO> criar(@Valid @RequestBody CriarInscricaoDTO dto,
+            Authentication authentication) {
+        String emailUsuarioLogado = authentication.getName();
+        InscricaoResponseDTO resposta = service.criar(dto, emailUsuarioLogado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
 
     @GetMapping
     @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public List<InscricaoResponseDTO> listarTodas() {
         return service.listarTodas().stream()
-                .map(insc -> new InscricaoResponseDTO(
-                        insc.getIdInscricao(),
-                        insc.getUser().getName(),
-                        insc.getEvent().getEventName(),
-                        insc.getRegistrationAt(),
-                        insc.getVisitorCount()
-                ))
+                .map(service::toResponseDTO)
                 .toList();
     }
 
     @GetMapping("/me")
     public List<InscricaoResponseDTO> listarMinhasInscricoes() {
         return service.listarInscricoesUsuarioLogado().stream()
-                .map(insc -> new InscricaoResponseDTO(
-                        insc.getIdInscricao(),
-                        insc.getUser().getName(),
-                        insc.getEvent().getEventName(),
-                        insc.getRegistrationAt(),
-                        insc.getVisitorCount()
-                ))
+                .map(service::toResponseDTO)
                 .toList();
     }
 
