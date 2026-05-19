@@ -26,6 +26,7 @@ public class InscricaoController {
         return new InscricaoResponseDTO(
                 insc.getIdInscricao(),
                 insc.getUser().getName(),
+                insc.getEvent().getIdEvento(),
                 insc.getEvent().getEventName(),
                 insc.getRegistrationAt(),
                 insc.getVisitorCount()
@@ -39,6 +40,7 @@ public class InscricaoController {
                 .map(insc -> new InscricaoResponseDTO(
                         insc.getIdInscricao(),
                         insc.getUser().getName(),
+                        insc.getEvent().getIdEvento(),
                         insc.getEvent().getEventName(),
                         insc.getRegistrationAt(),
                         insc.getVisitorCount()
@@ -52,6 +54,7 @@ public class InscricaoController {
                 .map(insc -> new InscricaoResponseDTO(
                         insc.getIdInscricao(),
                         insc.getUser().getName(),
+                        insc.getEvent().getIdEvento(),
                         insc.getEvent().getEventName(),
                         insc.getRegistrationAt(),
                         insc.getVisitorCount()
