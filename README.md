@@ -129,7 +129,7 @@ Authorization: Bearer {token}
 ### Entrega 04 — Incremento Final
 
 - **Screencast:** [Assistir no YouTube](https://youtu.be/lkn-Brc8j_M)
-- **Histórias de Usuário (HU-01 e HU-02):** [historias-usuario.docx](./historias-usuario.docx)
+- **Histórias de Usuário (HU-01 e HU-02):** [historias-usuario.docx](docs/historias-usuario.docx)
 - **Issues/Bugtracker:** [Ver issues](https://github.com/brunosm26/Connect_Tickets-Projeto_POO/issues)
 
 <img width="1123" alt="issues" src="https://github.com/user-attachments/assets/74aeece3-3699-425c-a1a0-1f3e1261ed5e" />
