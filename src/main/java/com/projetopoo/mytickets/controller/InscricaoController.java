@@ -22,44 +22,18 @@ public class InscricaoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public InscricaoResponseDTO criar(@Valid @RequestBody InscricaoDTO dto) {
-        var insc = service.salvarInscricao(dto);
-        return new InscricaoResponseDTO(
-                insc.getIdInscricao(),
-                insc.getUser().getName(),
-                insc.getEvent().getIdEvento(),
-                insc.getEvent().getEventName(),
-                insc.getRegistrationAt(),
-                insc.getVisitorCount()
-        );
+        return service.salvarInscricao(dto);
     }
 
     @GetMapping
     @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public List<InscricaoResponseDTO> listarTodas() {
-        return service.listarTodas().stream()
-                .map(insc -> new InscricaoResponseDTO(
-                        insc.getIdInscricao(),
-                        insc.getUser().getName(),
-                        insc.getEvent().getIdEvento(),
-                        insc.getEvent().getEventName(),
-                        insc.getRegistrationAt(),
-                        insc.getVisitorCount()
-                ))
-                .toList();
+        return service.listarTodas();
     }
 
     @GetMapping("/me")
     public List<InscricaoResponseDTO> listarMinhasInscricoes() {
-        return service.listarInscricoesUsuarioLogado().stream()
-                .map(insc -> new InscricaoResponseDTO(
-                        insc.getIdInscricao(),
-                        insc.getUser().getName(),
-                        insc.getEvent().getIdEvento(),
-                        insc.getEvent().getEventName(),
-                        insc.getRegistrationAt(),
-                        insc.getVisitorCount()
-                ))
-                .toList();
+        return service.listarInscricoesUsuarioLogado();
     }
 
     @DeleteMapping("/{idInscricao}")

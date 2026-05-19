@@ -6,6 +6,7 @@ import com.projetopoo.mytickets.model.Evento;
 import com.projetopoo.mytickets.model.Inscricao;
 import com.projetopoo.mytickets.model.Usuario;
 import com.projetopoo.mytickets.model.dtos.InscricaoDTO;
+import com.projetopoo.mytickets.model.dtos.InscricaoResponseDTO;
 import com.projetopoo.mytickets.repository.EventoRepository;
 import com.projetopoo.mytickets.repository.InscricaoRepository;
 import com.projetopoo.mytickets.repository.UsuarioRepository;
@@ -37,7 +38,7 @@ public class InscricaoService {
     }
 
     @Transactional
-    public Inscricao salvarInscricao(InscricaoDTO dto) {
+    public InscricaoResponseDTO salvarInscricao(InscricaoDTO dto) {
         Usuario usuario = usuarioRepository.findById(dto.userId())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + dto.userId()));
 
@@ -57,20 +58,38 @@ public class InscricaoService {
         inscricao.setRegistrationAt(dto.registrationAt() != null ? dto.registrationAt() : LocalDateTime.now());
         inscricao.setVisitorCount(dto.visitorCount());
 
-        return inscricaoRepository.save(inscricao);
+        Inscricao salva = inscricaoRepository.save(inscricao);
+        // Monta o DTO de resposta dentro da transação, com a sessão Hibernate aberta,
+        // evitando LazyInitializationException ao acessar user/event no controller.
+        return toResponseDTO(salva);
+    }
+
+    private InscricaoResponseDTO toResponseDTO(Inscricao insc) {
+        return new InscricaoResponseDTO(
+                insc.getIdInscricao(),
+                insc.getUser().getName(),
+                insc.getEvent().getIdEvento(),
+                insc.getEvent().getEventName(),
+                insc.getRegistrationAt(),
+                insc.getVisitorCount()
+        );
     }
 
     @Transactional(readOnly = true)
-    public List<Inscricao> listarTodas() {
-        return inscricaoRepository.findAll();
+    public List<InscricaoResponseDTO> listarTodas() {
+        return inscricaoRepository.findAll().stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
     @Transactional(readOnly = true)
-    public List<Inscricao> listarInscricoesUsuarioLogado() {
+    public List<InscricaoResponseDTO> listarInscricoesUsuarioLogado() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = userDetails.getUsuario().getIdUsuario();
-        return inscricaoRepository.findByUser_IdUsuario(userId);
+        return inscricaoRepository.findByUser_IdUsuario(userId).stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
     @Transactional
